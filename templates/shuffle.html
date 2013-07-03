@@ -1,0 +1,351 @@
+
+
+<html>
+<head>
+    <title>5c shuffle</title>
+    <link rel="stylesheet" href="../../../../static/shufflestyles.css" />
+  <link href='http://fonts.googleapis.com/css?family=Raleway:100,400' rel='stylesheet' type='text/css'>
+
+  <script src ="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="../../../../static/isotope.js"></script> <script src="../../../../static/isotope2.js"></script> 
+</head>
+<body>
+<div>
+    <div id="fb-root" ></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  
+  <div style="color:#FFFFFF; position: absolute; float:left; vertical-align: right; z-index: 100;" class="fb-like" data-href="http://www.pomonashuffle.com" data-send="true" data-width="450" data-show-faces="true" data-font="arial" ></div>
+
+ <div class="whatisthis"><a class="fancybox" style="font-family:Helvetica, Arial; color:#fff;" href='#inline1' title="Hit 'esc' or click close to get started!">WHAT IS THIS?</a></div></div>
+
+
+   <center><div class ="fade"><img src="/static/logo.png"></div></center>
+
+
+</div>
+
+  
+
+
+    <div id="container" class="clickable clearfix">            
+  <div class='deck'>
+    {% for i in range(0,length) %}
+      <div class='card ' id='box{{ i % 3 }}'>
+        <div class='subcard {{course_list[i]['favorite']}}'>
+        <div class="cardNumber">{{i+1}}</div>
+        <div style="width: 100%; background-color: #015C65; border-top-right-radius: 15px;
+-moz-border-radius-topright: 15px;"> <h1 class="classTitle" style="text-align:center;">{{course_list[i]['name']}}</h1> </div>
+        <h3 style="position: relative; text-align:center;">{{course_list[i]['major']}}{{course_list[i]['number']}} &#151 {{course_list[i]['teacher']}} ({{course_list[i]["school"]}})</h3>
+        <p style="position: absolute; left: 10px; right:10px;">{{course_list[i]['description']}}</p>
+      </div>
+      </div>
+    {% endfor %}
+  </div>
+  </div>
+
+  <!-- <div id="explode">Explode</div> -->
+  
+<!-- 
+  <div class = "test" style="font-family:Futura; text-shadow: black 0.1em 0.1em 0.2em; border-bottom: none; color: #FFFFFF; text-align:center; font-size: 25px;">
+    Favorites
+    <ul id="saveList">
+      <li>
+      </li>
+    </ul>
+
+  </div> -->
+  <!-- <div class="descrip" style = " right: 10%; bottom: 3%; font-family:'Raleway',serif; font-weight: 400; color: #FFFFFF; text-align: center;"><center style = "text-shadow: black 0.1em 0.1em 0.2em;"><footer>Click on each card to scroll through your current deck. Press space to get a new deck! </footer></center></div> -->
+ <!--  <div class="descrip" style = " right: 10%; bottom: 3%; font-family:'Raleway',serif; font-weight: 400; color: #FFFFFF; text-align: center;"><center style = "text-shadow: black 0.1em 0.1em 0.2em;"><footer>A web application by Hong Suh '16, Ryan Luo '16, Mauricio Molina '15, and Aloke Desai '16 </footer></center></div>
+ -->
+  
+  <div id="inline1" style="width:400px;display:none;">
+      <h1 style="font-family: Raleway, sans-serif; color: #000;">The Pomona Shuffle</h1>
+    <p style="color: #000; font-size: 1.1em">
+      The Pomona Shuffle is an interactive class-finder for the eager, wise, and slightly area-deficient Sagehen. Pressing space brings up ten new courses currently offered (Fall 2013) for you to peruse at yoru leisure! </br></br>
+
+      Pomona Shuffle is currently displaying all 1500 courses available to all students at the 5Cs. Come back next semester for more updates!</br></br>
+
+      Email PomonaShuffle@gmail.com with any questions/concerns you may have!</br></br>
+
+      <span style="font-weight: bold">Designed by Aloke Desai '16, Hong Suh '16, Mauricio Molina '15, and Ryan Luo '16.</span>
+    </p>
+  </div>
+  <div id="large"></div>
+  <div id="background"></div>
+    <script>  
+     
+    jQuery.fn.center = function () {
+    this.css("position","absolute");
+    this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) + 
+                                                $(window).scrollTop()) + "px");
+    this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) + 
+                                                $(window).scrollLeft()) + "px");
+    return this;
+}
+    $(document).ready(function(){
+      $('#container').center();
+      $(window).resize(function(){$('#container').center()});
+      $('.card:nth-child(6)').toggleClass('focus')
+    });
+    function isAnimating() {
+      return $(":animated").length > 0;
+    }
+     $(function(){
+    
+    var $container = $('#container');
+    
+    
+      // add randomish size classes
+      $container.find('.card').each(function(){
+        var $this = $(this);
+          $this.addClass('width2');
+          $this.addClass('height2');
+          $this.find('h3,p').hide();
+        });
+    
+    $container.isotope({
+      itemSelector : '.card',
+      masonry : {
+        columnWidth : 120
+      },
+      masonryHorizontal : {
+        rowHeight: 120
+      },
+      getSortData : {
+        symbol : function( $elem ) {
+          return $elem.attr('data-symbol');
+        },
+        category : function( $elem ) {
+          return $elem.attr('data-category');
+        },
+        number : function( $elem ) {
+          return parseInt( $elem.find('.cardNumber').text(), 10 );
+        },
+        weight : function( $elem ) {
+          return $elem.css('background');
+        },
+        name : function ( $elem ) {
+          return $elem.find('.classTitle').text();
+        }
+      }
+    });
+    
+    
+      var $optionSets = $('#options .option-set'),
+          $optionLinks = $optionSets.find('a');
+
+      $optionLinks.click(function(){
+        var $this = $(this);
+        // don't proceed if already selected
+        if ( $this.hasClass('selected') ) {
+          return false;
+        }
+        var $optionSet = $this.parents('.option-set');
+        $optionSet.find('.selected').removeClass('selected');
+        $this.addClass('selected');
+  
+        // make option object dynamically, i.e. { filter: '.my-filter-class' }
+        var options = {},
+            key = $optionSet.attr('data-option-key'),
+            value = $this.attr('data-option-value');
+        // parse 'false' as false boolean
+        value = value === 'false' ? false : value;
+        options[ key ] = value;
+        if ( key === 'layoutMode' && typeof changeLayoutMode === 'function' ) {
+          // changes in layout modes need extra logic
+          changeLayoutMode( $this, options )
+        } else {
+          // otherwise, apply new options
+          $container.isotope( options );
+        }
+        
+        return false;
+      });
+
+
+    
+      // change layout
+      var isHorizontal = false;
+      function changeLayoutMode( $link, options ) {
+        var wasHorizontal = isHorizontal;
+        isHorizontal = $link.hasClass('horizontal');
+
+        if ( wasHorizontal !== isHorizontal ) {
+          // orientation change
+          // need to do some clean up for transitions and sizes
+          var style = isHorizontal ? 
+            { height: '80%', width: $container.width() } : 
+            { width: 'auto' };
+          // stop any animation on container height / width
+          $container.filter(':animated').stop();
+          // disable transition, apply revised style
+          $container.addClass('no-transition').css( style );
+          setTimeout(function(){
+            $container.removeClass('no-transition').isotope( options );
+          }, 100 )
+        } else {
+          $container.isotope( options );
+        }
+      }
+
+
+    
+      // change size of clicked element
+      
+
+      // toggle variable sizes of all elements
+      $('#toggle-sizes').find('a').click(function(){
+        $container
+          .toggleClass('variable-sizes')
+          .isotope('reLayout');
+        return false;
+      });
+
+
+    
+      $('#insert a').click(function(){
+        var $newEls = $( fakeElement.getGroup() );
+        $container.isotope( 'insert', $newEls );
+
+        return false;
+      });
+
+      $('#append a').click(function(){
+        var $newEls = $( fakeElement.getGroup() );
+        $container.append( $newEls ).isotope( 'appended', $newEls );
+
+        return false;
+      });
+
+
+    var $sortBy = $('#sort-by');
+    $('#shuffle a').click(function(){
+      $container.isotope('shuffle');
+      $sortBy.find('.selected').removeClass('selected');
+      $sortBy.find('[data-option-value="random"]').addClass('selected');
+      return false;
+    });
+
+    $container.delegate( '.card', 'click', function(){
+        var swap = $(this).find('.cardNumber').text();
+        if((swap === '6' && $(this).hasClass('large'))||$('.card').is(':animated')){
+
+        }
+        else{
+        var $oldItem = $container.find('.focus');  
+        $oldItem.find('.cardNumber').text(swap);      
+        $oldItem.toggleClass('focus');
+        $container.find('.large').find('h3,p').hide();
+        $container.find('.large').find('.classTitle').css({'font-size':'1.5em','font-weight':'none'});
+        $container.find('.large').toggleClass('large');
+        var $removable = $(this);
+        $removable.find('.cardNumber').text('6');
+        if(swap>6){
+          $oldItem.hide();
+          var $oldClone = $oldItem.stop().clone();
+          $oldClone.css('display','inline').delay();
+          $container.isotope('remove',$oldItem);
+          $container.isotope('insert',$oldClone);
+        }        
+        $removable.hide();
+        $removable.toggleClass('large');
+        $removable.toggleClass('focus');
+        $removable.find('.classTitle').css({'font-size':'2.5em','font-weight':'bold'});
+        $removable.find('h3,p').show();
+        var $newItem = $removable.clone();
+        $newItem.css('display','inline');
+        $container.isotope('remove',$removable);
+        $container.isotope('insert',$newItem);
+
+        $container.isotope({sortBy: 'number'});
+        $container.isotope('reLayout');
+      }
+      });
+          // $container.delegate( '.card', 'click', function(){
+          //       $container.find('.large').find('h3,p').hide();
+          //       $container.find('.large').find('.classTitle').css({'font-size':'1.5em','font-weight':'none'});
+          //       $container.find('.large').toggleClass('large');
+          //       var $removable = $(this);
+          //       $removable.toggleClass('large');
+          //       $removable.toggleClass('focus');
+          //       $removable.find('.classTitle').css({'font-size':'2.5em','font-weight':'bold'});
+          //       $removable.find('.cardNumber').text('6');
+          //       $removable.find('h3,p').show();
+          //       $container.isotope('reLayout');
+          // });
+  });
+
+$(function(){
+  $('#name').click(function(){
+    $('#container').isotope({sortBy: 'name'});
+    $('#container').isotope('reLayout');
+  });
+});
+$(function(){
+  $('#weight').click(function(){
+    $('#container').isotope({sortBy: 'weight'});
+    $('#container').isotope('reLayout');
+  });
+});
+$(function(){
+  $('#number').click(function(){
+    $('#container').isotope({sortBy: 'number'});
+    $('#container').isotope('reLayout');
+  });
+});
+$('#shuffle a').click(function(){
+      $container.isotope('shuffle');
+      $sortBy.find('.selected').removeClass('selected');
+      $sortBy.find('[data-option-value="random"]').addClass('selected');
+      return false;
+      $('#container').isotope({sortBy: 'random'});
+      $('#container').isotope('reLayout');
+    });
+
+    $(function(){
+
+        $('.fancybox').mouseenter(function(){
+        $('div a.fancybox').css('color','#CCC');
+      });
+      $('.fancybox').mouseleave(function(){
+        $('div a.fancybox').css('color','#fff');
+      });
+      $(".fancybox").click(function(){
+
+              $("#background").css({"opacity" : "0.8",'position' : 'absolute','z-index' : '9998'})
+                            .fadeIn("slow");
+
+              $("#inline1").css({'opacity' : '1','z-index' : '9999'}).center().fadeIn('slow');
+
+              return false;
+          });
+      $(document).keypress(function(e){
+                  if(e.keyCode==27){
+                      $("#background").fadeOut("slow");
+                      $("#large").fadeOut("slow");
+                  }
+              });
+
+          $("#background").click(function(){
+              $("#background").fadeOut("slow");
+              $("#inline1").fadeOut("slow");
+          });
+
+          $("#large").click(function(){
+              $("#background").fadeOut("slow");
+              $("#inline1").fadeOut("slow");
+          });
+
+    });
+
+
+    </script>
+</body>
+
+</html>
