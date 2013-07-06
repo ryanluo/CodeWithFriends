@@ -6,7 +6,8 @@ from bson.objectid import ObjectId
 
 
 app = Flask(__name__)
-
+app.jinja_env.add_extension('jinja2.ext.do')
+app.jinja_env.add_extension('jinja2.ext.loopcontrols')
 
 # client = pymongo.MongoClient('mongodb://alokedesai:domino@ds029638.mongolab.com:29638/api')
 # db = client['api']
