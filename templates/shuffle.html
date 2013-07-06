@@ -7,7 +7,8 @@
   <link href='http://fonts.googleapis.com/css?family=Raleway:100,400' rel='stylesheet' type='text/css'>
 
   <script src ="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script src="../../../../static/isotope.js"></script> <script src="../../../../static/isotope2.js"></script> 
+  <script src="../../../../static/isotope.js"></script> <script src="../../../../static/isotope2.js">
+  </script> <script src="../../../../static/getClasses.js"></script>
 </head>
 <body>
 <div>
@@ -29,7 +30,8 @@
 
 
 </div>
-
+{% set one = 1 %}
+{% set counter = 0 %}
   
 
 
@@ -41,7 +43,7 @@
         <div class="cardNumber">{{i+1}}</div>
         <div style="width: 100%; background-color: #015C65; border-top-right-radius: 15px;
 -moz-border-radius-topright: 15px;"> <h1 class="classTitle" style="text-align:center;">{{course_list[i]['name']}}</h1> </div>
-        <h3 style="position: relative; text-align:center;">{{course_list[i]['major']}}{{course_list[i]['number']}} &#151 {{course_list[i]['teacher']}} ({{course_list[i]["school"]}})</h3>
+        <h3 style="position: relative; text-align:center;">{{course_list[i]["major"]}}{{course_list[i]['number']}} &#151 {{course_list[i]['teacher']}} ({{course_list[i]["school"]}})</h3>
         <p style="position: absolute; left: 10px; right:10px;">{{course_list[i]['description']}}</p>
       </div>
       </div>
@@ -60,26 +62,61 @@
     </ul>
 
   </div> -->
-  <!-- <div class="descrip" style = " right: 10%; bottom: 3%; font-family:'Raleway',serif; font-weight: 400; color: #FFFFFF; text-align: center;"><center style = "text-shadow: black 0.1em 0.1em 0.2em;"><footer>Click on each card to scroll through your current deck. Press space to get a new deck! </footer></center></div> -->
- <!--  <div class="descrip" style = " right: 10%; bottom: 3%; font-family:'Raleway',serif; font-weight: 400; color: #FFFFFF; text-align: center;"><center style = "text-shadow: black 0.1em 0.1em 0.2em;"><footer>A web application by Hong Suh '16, Ryan Luo '16, Mauricio Molina '15, and Aloke Desai '16 </footer></center></div>
- -->
+  <div class="descrip" style = " right: 10%; bottom: 3%; font-family:'Raleway',serif; font-weight: 400; color: #FFFFFF; text-align: center;"><center style = "text-shadow: black 0.1em 0.1em 0.2em;"><footer>Click on each card to scroll through your current deck. Press space to get a new deck! </footer></center></div>
+  <div class="descrip" style = " right: 10%; bottom: 3%; font-family:'Raleway',serif; font-weight: 400; color: #FFFFFF; text-align: center;"><center style = "text-shadow: black 0.1em 0.1em 0.2em;"><footer>A web application by Hong Suh '16, Ryan Luo '16, Mauricio Molina '15, and Aloke Desai '16 </footer></center></div>
+
   
   <div id="inline1" style="width:400px;display:none;">
-      <h1 style="font-family: Raleway, sans-serif; color: #000;">The Pomona Shuffle</h1>
-    <p style="color: #000; font-size: 1.1em">
+      <h3>The Pomona Shuffle</h3>
+    <p style="color: #000;  ">
       The Pomona Shuffle is an interactive class-finder for the eager, wise, and slightly area-deficient Sagehen. Pressing space brings up ten new courses currently offered (Fall 2013) for you to peruse at yoru leisure! </br></br>
 
       Pomona Shuffle is currently displaying all 1500 courses available to all students at the 5Cs. Come back next semester for more updates!</br></br>
 
       Email PomonaShuffle@gmail.com with any questions/concerns you may have!</br></br>
 
-      <span style="font-weight: bold">Designed by Aloke Desai '16, Hong Suh '16, Mauricio Molina '15, and Ryan Luo '16.</span>
+      Designed by Aloke Desai '16, Hong Suh '16, Mauricio Molina '15, and Ryan Luo '16.
     </p>
   </div>
   <div id="large"></div>
   <div id="background"></div>
+  
     <script>  
-     
+
+    var size = {{size}};
+    var counter = 0;
+    var course_list = new Array;
+    {% do course_list.reverse() %}
+    {% for i in range(0,size) %}
+      
+      course_list.push({name: '{{course_list[i]['name']}}', major: '{{course_list[i]['major']}}', number: '{{course_list[i]['number']}}',teacher: '{{course_list[i]['teacher']}}',school: '{{course_list[i]['school']}}', descrip: '{{course_list[i]['description']}}'})
+;
+    {%endfor%}
+    function shuffle(array) {
+      var currentIndex = array.length
+        , temporaryValue
+        , randomIndex
+        ;
+
+      // While there remain elements to shuffle...
+      while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+      }
+
+      return array;
+    }
+    create = function(counter,name,major,number,teacher,school,description){
+        return "<div class='card ' id='box"+counter%3+"'><div class='subcard '><div class='cardNumber'>"+((counter%13)+1)+"</div><div style='width: 100%; background-color: #015C65; border-top-right-radius: 15px;-moz-border-radius-topright: 15px;'><h1 class='classTitle' style='text-align:center;'>"+name+"</h1> </div><h3 style='position: relative; text-align:center;'>"+major+number+" &#151 "+teacher+" "+school+"</h3><p style='position: absolute; left: 10px;right:10px;'>"+description+"</p></div></div>"
+      }
+    var numberOfClasses = {{size}};
     jQuery.fn.center = function () {
     this.css("position","absolute");
     this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) + 
@@ -307,6 +344,7 @@ $('#shuffle a').click(function(){
       $('#container').isotope({sortBy: 'random'});
       $('#container').isotope('reLayout');
     });
+    
 
     $(function(){
 
@@ -318,17 +356,48 @@ $('#shuffle a').click(function(){
       });
       $(".fancybox").click(function(){
 
-              $("#background").css({"opacity" : "0.8",'position' : 'absolute','z-index' : '9998'})
+              $("#background").css({"opacity" : "0.6",'position' : 'absolute','z-index' : '9998'})
                             .fadeIn("slow");
 
               $("#inline1").css({'opacity' : '1','z-index' : '9999'}).center().fadeIn('slow');
 
               return false;
           });
+
       $(document).keypress(function(e){
                   if(e.keyCode==27){
                       $("#background").fadeOut("slow");
                       $("#large").fadeOut("slow");
+                  }
+                  if(e.keyCode==32){
+                    var $oldItems = $('.card');
+                    course_list = shuffle(course_list);
+                    var stop = (counter+13)
+                    
+                    $('#container').isotope('remove', $oldItems);
+                    
+                    for(var i = counter; i < stop; i++){
+                      counter++;
+                    if(i==size){
+                      i=0;
+                      counter=0;
+                      break;
+                    }
+                    var newEls = create(counter,course_list[(i%size)].name,course_list[(i%size)].major,course_list[(i%size)].number,course_list[(i%size)].teacher,course_list[(i%size)].school,course_list[(i%size)].descrip);
+
+                    var $newEls = $(newEls);
+                   if(counter%13+1==6)
+                    $newEls.addClass('focus');
+
+                    $('#container').append( $newEls ).isotope( 'appended', $newEls );
+                    
+                    }
+                    $('#container').find('.card').each(function(){
+                      var $this = $(this);
+                      $this.addClass('width2');
+                      $this.addClass('height2');
+                      $this.find('h3,p').hide();
+                    });
                   }
               });
 
@@ -343,8 +412,13 @@ $('#shuffle a').click(function(){
           });
 
     });
+  
+  $(document).ready(function(){
+    $('#test').text('sup')
+    $('#test').text(counter+course_list[1].name);
+  });
 
-
+    
     </script>
 </body>
 
