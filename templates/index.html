@@ -39,14 +39,17 @@
     </div>
   </div>
 
+
+
 <div id="inline1" >
-  <h2  style="font-family:'Raleway' , sans-serif; color: #000;">Filter</h2>
+  <h2 style="font-family:'Raleway' , sans-serif">Filter</h2>
   <!-- <form action="{{ url_for('results') }}" method="POST" class="search-box"> -->
   <form onsubmit = "test(this.major.value, 'hi', 'hi', 'hi')" method="GET" class="search-box">
         <table>
           <tr>
             <td>
          <div  class = "styled">
+        <span id="spanForMajorChosenSelect">
           <select data-placeholder="Choose a major..." class ="major" name="major" id= "language">
           <option value="any">Any</option>
           <option value="AFRI">Africana Studies</option>
@@ -118,7 +121,7 @@
           <option value="POLI">Politics</option>
           <option value="PORT">Portuguese</option>
           <option value="POST">Political Studies</option>
-          <option value="PPAs">Public Policy Analysis</option>
+          <option value="PPA">Public Policy Analysis</option>
           <option value="PPE">Philosophy,Politics,Econonmics</option>
           <option value="PSYC">Psychology</option>
           <option value="RLST">Religious Studies</option>
@@ -132,6 +135,7 @@
           <option value="THEA">Theatre</option>
           <option value="WRIT">Writing</option>
         </select>
+      </span>
       </div>
           </td>
           <td>
@@ -144,6 +148,7 @@
 
       <div class="school">
       <td>
+        <span id="spanForSchoolChosenSelect">
          <select data-placeholder="Choose a school..." class ="major school" name="major" id= "language">
           <option value="any">All</option>
           <option value="PO">Pomona</option>
@@ -153,24 +158,24 @@
           <option value="PZ">Pitzer</option>
           
         </select>
+      </span>
       </td>
     </div>
     </tr>
-    </table>
-    <center><table>
-    <tr>
+
     <td>
            <center><a href="#" style="text-decoration: none; color: #fff"><div class="orbutton" style="font-weight: bold">Search!</div></a></center>
       </td>
-    </tr>
-         </table></center>
+         </table>
       </form>
   </div>
 
   <div id="background"></div>
   <script>
   $(".major").chosen();
-  
+  $("#spanForMajorChosenSelect").hide();
+  $("#spanForSchoolChosenSelect").hide();
+  $('#inline1').hide();
     jQuery.fn.center = function () {
     this.css("position","absolute");
     this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) + 
@@ -181,11 +186,15 @@
 }
     $(function(){
       $('.whatisthis').click(function(){
+        $("#spanForMajorChosenSelect").show();
+        $("#spanForSchoolChosenSelect").show();        
         $('#inline1').center().css('z-index','9999').fadeIn('slow');
         $('#background').css({'opacity':'.5','position':'absolute','z-index':'9998'}).fadeIn('slow');
       });
 
       $('#background').click(function(){
+        $("#spanForMajorChosenSelect").hide();
+        $("#spanForSchoolChosenSelect").hide();
         $('#inline1').fadeOut('slow');
         $('#background').fadeOut('slow');
       })
