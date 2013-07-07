@@ -116,7 +116,7 @@ for i in range(len (courses)):
 for i in range(0, len(courses)):
   course = {'coursename': courses[i],
             "name" : names[i],
-            'major': majors[i],
+            'major': majors[i].strip(),
           'number' : int(number[i]),            
           'profs': profs[i],
           "teacher" : profs[i][0:(profs[i].find("credit")-3)],
