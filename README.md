@@ -5,4 +5,4 @@ Pomona Shuffle is a web app that allows you to find random classes from the 5C c
 
 The app is made with Flask and a MongoDB database, and all the animations are done through Javascript. 
 
-To access the app, visit [http://desolate-journey-3815.herokuapp.com/](http://desolate-journey-3815.herokuapp.com/).
+To access the app, visit [http://pomonashuffle.herokuapp.com/](http://pomonashuffle.herokuapp.com/).
