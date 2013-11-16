@@ -10,18 +10,19 @@
     <!-- Download from http://www.firepad.io/firepad.zip -->
     <link rel="stylesheet" href="stylesheets/firepad.css" />
     <script src="javascripts/firepad.js"></script>
-    <title><%= title %></title>
+    <title></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <h1></h1>
+    <p>Welcome to</p>
     <div id="firepad"></div>
     <script>
       var firepadRef = new Firebase('https://fire-base-test.firebaseio.com/');
       var codeMirror = CodeMirror(document.getElementById('firepad'), { lineWrapping: true });
       var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror,
-          { richTextShortcuts: true, richTextToolbar: true });
+          { richTextShortcuts: false, richTextToolbar: false });
     </script>
+    <p></p>
   </body>
 </html>
