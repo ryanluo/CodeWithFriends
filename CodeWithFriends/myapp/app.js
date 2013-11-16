@@ -117,7 +117,9 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/', routes.index);
+app.get('/',function(req,res){
+	res.render('index',{text:""});
+});
 app.get('/users', user.list);
 
 app.get('/hardSaves', function(req,res){
@@ -155,11 +157,13 @@ app.get('/reconstruct/:id',function(req,res){
 		}
 	}
         console.log(write)
+		
 	//text = reconstruct(CodeWithFriends[0])
     	res.render('text',{text:write});
+
     });
-    console.log(write+";sdifj");
-    res.redirect('/');
+    //console.log(write+";sdifj");
+    //res.redirect('/');
 });
 
 http.createServer(app).listen(app.get('port'), function(){
