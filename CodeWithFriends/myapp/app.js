@@ -13,7 +13,7 @@ var monk = require('monk');
 var db = monk('localhost:27017/test');
 var app = express();
 var Firebase = require('firebase');
-var myRootRef = new Firebase('https://fire-base-test.firebaseio.com/');
+var myRootRef = new Firebase('https://pad-test.firebaseio.com/');
 var databaseUrl = "rluo:arroke@ds053788.mongolab.com:53788/codewithfriends";
 var collections = ["CodeWithFriends"]
 var db = require("mongojs").connect(databaseUrl, collections);
@@ -110,7 +110,7 @@ app.use(express.session());
 app.use(app.router);
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
-var dataRef = new Firebase('https://fire-base-test.firebaseio.com/history');
+var dataRef = new Firebase('https://pad-test.firebaseio.com/history');
 
 // development only
 if ('development' == app.get('env')) {
@@ -148,7 +148,7 @@ app.get('/reconstruct/:id',function(req,res){
 		var input = json[keys[key]].o
 		if(typeof input[1]=='number'){
 			if(input[2]==0)
-				write = write.substring(0,write.length-1)
+				write = write.substring(0,write.length+input[2])
 			else
 				write = write.substring(0,input[0])+write.substring(input[0]+(-1*input[1]))
 		}
