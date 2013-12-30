@@ -8,7 +8,23 @@
   "dependencies": {
     "express": "3.4.1",
     "ejs": "*",
-    "firebase":"*",
+    "firebase": "*",
     "stylus": "*"
+  },
+  "description": "ERROR: No README data found!",
+  "main": "app.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ryanluo/CodeWithFriends.git"
+  },
+  "keywords": [
+    "collaborative",
+    "coding"
+  ],
+  "author": "Ryan Luo, Aloke Desai, Mauricio Molina",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/ryanluo/CodeWithFriends/issues"
   }
 }
