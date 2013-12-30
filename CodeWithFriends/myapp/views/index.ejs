@@ -91,12 +91,35 @@
 
      <div class="container"></div>
 
-      <div class="logo">Javascript (press CTRL+SHIFT to run):</div> <br>
+      <div class="logo">Javascript (press CTRL+'S' to save, CTRL+SHIFT to run):</div> <br>
         <div class="row"></div>
             <div class="col-md-6">
                 <!-- input text area (the firepad part) -->
                 <div  id="firepad"></div>
                         <script>
+  var characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  function revisionToId(revision) {
+    if (revision === 0) {
+      return 'A0';
+    }
+
+    var str = '';
+    while (revision > 0) {
+      var digit = (revision % characters.length);
+      str = characters[digit] + str;
+      revision -= digit;
+      revision /= characters.length;
+    }
+
+    // Prefix with length (starting at 'A' for length 1) to ensure the id's sort lexicographically.
+    var prefix = characters[str.length + 9];
+    return prefix + str;
+  }
+
+
+			   $('#firepad').jkey('ctrl+s',function(){
+				firepad.firebaseAdapter_.hardsave_();
+			   });
                            function endsWith(str, suffix) {
                         var index = str.lastIndexOf(suffix);
                         return index >= 0 && index === str.length - suffix.length;
@@ -178,26 +201,14 @@
                             }
                         };
                         var evaluator = new Evaluator(cons);
-
+			var prog;
                         var environment = {};
                         var inputArea = document.getElementById("firepad");
                         $("#firepad").jkey('ctrl+shift', function () {
-                            console.log("x");
-                             var prog = ""
-                          $('.CodeMirror-code').children('div').each(function () {
-                                
-                            $(this).children("pre").each(function () {
-                                if (  $(this).text() != "&nbsp;") {
-                                    prog = prog + $(this).text(); 
-                                   
-                                }
-                                
-                            })
-                            
-                        });
-
-                            // var resultStr = evaluator.evaluate(extractText(inputArea));
-                            var resultStr = evaluator.evaluate(prog);
+                             var revId = revisionToId(firepad.firebaseAdapter_.revision_);
+                             
+			     firepad.firebaseAdapter_.ref_.child("hardsaves").once('value',function(s){prog =  (s.val().o[0]);
+var resultStr = evaluator.evaluate(prog);
                             appendResultStr(resultStr);
 
                             //create a new line between each input
@@ -207,6 +218,33 @@
                                 inputArea.value = insert(inputArea.value, pos, "\n");
                                 inputArea.setSelectionRange(pos+1, pos+1);
                             }
+});
+			     
+                          /*$('.CodeMirror-code').children('div').each(function () {
+                                
+                            $(this).children("pre").each(function () {
+                                if (  $(this).text() != "&nbsp;") {
+                                    prog = prog + $(this).text(); 
+                                   
+                                }
+                                
+                            })
+                            
+                        })i;*/
+
+                            // var resultStr = evaluator.evaluate(extractText(inputArea));
+                        /*prog = "console.log(\"what\");\nconsole.log(\"hi\");\nconsole.log(\"sup\");\nconsole.log(\"test\");"     
+			console.log(prog);
+			var resultStr = evaluator.evaluate(prog);
+                            appendResultStr(resultStr);
+
+                            //create a new line between each input
+                            jqconsole.Write("\n");
+                            if (cursorIsAtLineEnd(inputArea)) {
+                                var pos = inputArea.selectionStart;
+                                inputArea.value = insert(inputArea.value, pos, "\n");
+                                inputArea.setSelectionRange(pos+1, pos+1);
+                            }*/
                         });
                        
                     }
