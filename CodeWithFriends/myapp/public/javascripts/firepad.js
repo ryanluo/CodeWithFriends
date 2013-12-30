@@ -1583,7 +1583,13 @@ firepad.FirebaseAdapter = (function (global) {
     }
     return { author: data.a, operation: op }
   };
-
+  FirebaseAdapter.prototype.hardsave_ = function() {
+    var id = revisionToId(this.revision_ - 1);
+    this.ref_.child('hardsaves').set({
+      a: this.userId_,
+      o: this.document_.toJSON()
+    });
+  }
   FirebaseAdapter.prototype.saveCheckpoint_ = function() {
     this.ref_.child('checkpoint').set({
       a: this.userId_,
