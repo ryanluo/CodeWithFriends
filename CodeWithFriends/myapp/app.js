@@ -8,16 +8,35 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
-var mongo = require("mongodb");
-var monk = require('monk');
-var db = monk('localhost:27017/test');
+
+
+
 var app = express();
 var Firebase = require('firebase');
-var myRootRef = new Firebase('https://pad-test.firebaseio.com/');
-var databaseUrl = "rluo:arroke@ds053788.mongolab.com:53788/codewithfriends";
-var collections = ["CodeWithFriends"]
-var db = require("mongojs").connect(databaseUrl, collections);
-var magic = require("./magic")
+var myRootRef = new Firebase('https://fire-base-test.firebaseio.com/');
+
+
+
+
+
+  var characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  function revisionToId(revision) {
+    if (revision === 0) {
+      return 'A0';
+    }
+
+    var str = '';
+    while (revision > 0) {
+      var digit = (revision % characters.length);
+      str = characters[digit] + str;
+      revision -= digit;
+      revision /= characters.length;
+    }
+
+    // Prefix with length (starting at 'A' for length 1) to ensure the id's sort lexicographically.
+    var prefix = characters[str.length + 9];
+    return prefix + str;
+  }
 
 function merge(left, right){
     var result  = [],
@@ -110,7 +129,7 @@ app.use(express.session());
 app.use(app.router);
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
-var dataRef = new Firebase('https://pad-test.firebaseio.com/history');
+var dataRef = new Firebase('https://fire-base-test.firebaseio.com/history');
 
 // development only
 if ('development' == app.get('env')) {
@@ -122,7 +141,7 @@ app.get('/',function(req,res){
 });
 app.get('/users', user.list);
 
-app.get('/hardSaves', function(req,res){
+/*app.get('/hardSaves', function(req,res){
     dataRef.on('value', function(snapshot) {
 	db.CodeWithFriends.save(snapshot.val());
     });
@@ -165,7 +184,7 @@ app.get('/reconstruct/:id',function(req,res){
     //console.log(write+";sdifj");
     //res.redirect('/');
 });
-
+*/
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
