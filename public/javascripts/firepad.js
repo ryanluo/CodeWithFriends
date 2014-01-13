@@ -1585,9 +1585,14 @@ firepad.FirebaseAdapter = (function (global) {
   };
   FirebaseAdapter.prototype.hardsave_ = function() {
     var id = revisionToId(this.revision_ - 1);
+    /*var text = this.document_.toJSON();
+    this.ref_.child('hardsaves').once('value',function(s){
+	
+    })*/
     this.ref_.child('hardsaves').set({
       a: this.userId_,
-      o: this.document_.toJSON()
+      o: this.document_.toJSON(),
+      id: revisionToId(this.revision_ - 1)
     });
   }
   FirebaseAdapter.prototype.saveCheckpoint_ = function() {
