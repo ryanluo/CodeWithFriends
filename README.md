@@ -1,8 +1,8 @@
-Pomona-Shuffle
+Code With Friends
 ==============
 
-Pomona Shuffle is a web app that allows you to find random classes from the 5C course catalog. Ryan Luo, Hong Suh, Mauricio Molina, and I started it during the 5C Hackathon in April, 2013 and finished it during the summer of 2013. 
+Code with Friends is a collaborative coding tool that allows attempts to solve merge conflicts with real-time version control. Ryan Luo, Hong Suh, Mauricio Molina, and Aloke Desai started it during the 5C Hackathon in Noember, 2013. 
 
-The app is made with Flask and a MongoDB database, and all the animations are done through Javascript. 
+The app is made with Node Express framework and a Firebase database.
 
-To access the app, visit [http://pomonashuffle.herokuapp.com/](http://pomonashuffle.herokuapp.com/).
+To access the app, visit [http://.herokuapp.com/](http://pomonashuffle.herokuapp.com/).
